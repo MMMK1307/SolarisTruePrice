@@ -1,0 +1,35 @@
+{
+    "name": "Solaris True Price ",
+    "version": "0.0.1.0",
+    "description": "Calculate prices and taxes in Solaris Japan",
+    "permissions": ["storage", "tabs"],
+    "host_permissions": ["https://*.solarisjapan.com/*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://*.solarisjapan.com/*"],
+        "js": ["contentScript.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+        ],
+        "matches": ["https://*.solarisjapan.com/*"]
+      }
+    ],
+    "action": {
+      "default_icon": {
+        "16": "assets/Stp-icon.png",
+        "24": "assets/Stp-icon.png",
+        "32": "assets/Stp-icon.png",
+        "48": "assets/Stp-icon.png",
+        "128": "assets/Stp-icon.png"
+      },
+      "default_title": "Solaris True Price",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+}
