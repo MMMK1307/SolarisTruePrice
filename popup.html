@@ -1,16 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="alert.css">
     <script src="contentScript.js"></script>
+    <script src="popup.js"></script>
     <title>Solaris True Price</title>
 </head>
-<body>
-    <div>
-        Oh, well. Nothing here
+
+<body class="tp-body">
+    <header class="tp-header">
+        <h1>SOLARIS TRUE PRICE</h1>
+    </header>
+    <div class="tp-switch-container">
+        <button class="tp-btn-tab active">Figures</button>
+        <button class="tp-btn-tab">Configuration</button>
+        <div class="tp-switch-line"></div>
     </div>
+
+    <div id="error-message-container" style="display: none" class="error-container message-container msg-show">
+        <span>---</span>
+        <div id="close-error-btn" class="close-btn">
+        </div>
+    </div>
+    <div id="success-message-container" style="display: none" class="success-container message-container msg-show">
+        <span>---</span>
+        <div id="close-success-btn" class="close-btn">
+            <img src="assets/bx-x-circle.svg" class='bx bx-x-circle'></img>
+        </div>
+    </div>
+
+    <div class="tp-main">
+        <div class="tp-bookmarks tab active" id="whishes">
+            <div class="tp-bookmark-item">
+                <div class="tp-item-title">
+                    <h2>
+                        <a>
+                            Add something Already!
+                        </a>
+                    </h2>
+                </div>
+                <div class="tp-bookmark-item-flex">
+                <div class="tp-item-image-container">
+                    <img class="tp-item-image"
+                        src="./assets/Stp-icon2.png"
+                        alt="">
+                </div>
+                    <div class="tp-item-price">
+                        <p class="tp-price tp-price-base">Base: <b> Normal Price</b>&nbsp;&nbsp;&nbsp;</p>
+                        <p class="tp-price tp-price-true">True: <b> True Price </b></p>
+                        <p class="tp-price tp-price-ship">Shipping: <b> Shipping Cost </b>&nbsp&nbsp</p>
+                    </div>
+                </div>
+                <div class="tp-item-actions">
+                    <div class="tp-item-actions-button" title="Favorite">
+                        <img class="tp-action-icon" src="./assets/tp-favorited-icon.svg" alt="">
+                        <span>Favorite</span>
+                    </div>
+                    <a style="text-decoration: none; color: white;" target="_blank" href="https://solarisjapan.com/">
+                        <div class="tp-item-actions-button" title="View">
+                            <img class="tp-action-icon" src="./assets/tp-view-icon2.svg" alt="">
+                            <span>View</span>
+                        </div>
+                    </a>    
+                    <div class="tp-item-actions-button" title="Delete">
+                        <img class="tp-action-icon" src="./assets/tp-delete-icon2.svg" alt="">
+                        <span>Delete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tp-configuration tab">
+            <div class="tp-configuration-container">
+                <h2 class="section-title">Theme</h2>
+                <label for="switchMode">
+                    <button class="tp-configuration-btn-special" data-theme="0" id="switchMode">Default</button>
+                    <span>Click to change!</span>
+                </label>
+            </div>
+            <hr class="tp-configuration-line">
+            <div class="tp-configuration-container">
+
+                <h2 class="section-title">Taxes Configuration</h2>
+
+                <h2>Shipping Price (x.00)</h2>
+                <div class="tp-configuration-box">
+                    <input type="number" name="shipCost" id="shipCost">
+                </div>
+                <h2>Taxes Percent (x.00)</h2>
+                <div class="tp-configuration-box">
+                    <input type="number" name="taxPercent" id="taxPercent">
+                </div>
+                <h2>Currency</h2>
+                <div class="tp-configuration-box">
+                    <select name="currency" id="currency">
+                        <option value="0">¥ - JPY </option>
+                        <option value="1">$ - USD</option>
+                        <option value="2">€ - EUR</option>
+                        <option value="3">£ - GBP</option>
+                        <option value="4">SFr. - CHF</option>
+                        <option value="5">$ - CAD</option>
+                        <option value="6">$ - AUD</option>
+                        <option value="7">R$ - BRL</option>
+                    </select>
+                </div>
+                <h2>Shipping Method</h2>
+                <div class="tp-configuration-box">
+                    <label for="ship-method0">
+                        <input type="radio" name="ship" id="ship-method0" value="0">
+                        <span>Saver</span>
+                    </label>
+                    <label for="ship-method1">
+                        <input type="radio" name="ship" id="ship-method1" value="1">
+                        <span>Regular</span>
+                    </label>
+                    <label for="ship-method2">
+                        <input type="radio" name="ship" id="ship-method2" value="2">
+                        <span>Express</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="tp-configuration-box">
+                <button class="tp-configuration-btn-special" id="saveConfig">Save</button>
+            </div>
+
+            <div class="tp-configuration-container">
+                <hr class="tp-configuration-line">
+                <h2 class="section-title">Death Options</h2>
+
+                <div class="tp-configuration-box configuration-methods">
+                    <button class="tp-configuration-btn-special" id="deleteWhishes">Delete</button>
+                    <label for="deleteWhishes">Delete all Wishes</label>
+                </div>
+
+                <div class="tp-configuration-box configuration-methods">
+                    <button class="tp-configuration-btn-special" id="resetConfig">Reset</button>
+                    <label for="resetConfig">Reset Configuration</label>
+                </div>
+            </div>
+        </div>
 </body>
+
 </html>

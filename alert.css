@@ -1,0 +1,88 @@
+.message-container {
+    margin-top: 4rem;
+    padding: 0.8rem 2rem 0.8rem 0.5rem;
+    max-width: 99%;
+    position: absolute;
+    overflow: hidden;
+    right: 0px;
+    top: 0.8rem;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.error-container {
+    background: hsla(0, 100%, 50%, 0.8);
+    border-left: 0.5rem solid hsla(0, 100%, 27%, 0.8);
+}
+
+.success-container {
+    background: hsla(120, 73%, 75%, 0.8);
+    border-left: 0.5rem solid hsla(120, 100%, 25%, 0.8);
+}
+
+.message-container.msg-show {
+    opacity: 1;
+    pointer-events: auto;
+    animation: slide-msg 1s ease forwards;
+}
+
+.message-container.msg-hide {
+    animation: hide-msg 1s ease backwards;
+}
+
+@keyframes slide-msg {
+    0% {
+        transform: translateX(100%);
+    }
+
+    40% {
+        transform: translateX(-10%);
+    }
+
+    80% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-10px);
+    }
+}
+
+@keyframes hide-msg {
+    0% {
+        opacity: 1;
+        transform: translateX(-10px);
+    }
+
+    40% {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translateX(-10%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.message-container span {
+    font-size: 0.9rem;
+    color: white;
+}
+
+.message-container .close-btn {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.message-container .close-btn img {
+    filter: invert(1);
+}

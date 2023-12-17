@@ -1,0 +1,453 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,900;1,500&display=swap');
+
+:root {
+    --clr-primary-soft: hsl(192, 100%, 91%);
+    --clr-primary: hsl(197, 100%, 67%);
+    --clr-primary-bold: hsl(197, 100%, 31%);
+    --clr-secondary: hsl(313, 100%, 74%);
+    --clr-secondary-bold: hsl(313, 100%, 45%);
+
+    --color-visibility: 20%;
+
+    --gray-main: hsla(0, 0%, 7%, var(--color-visibility));
+    --gray-main: 0, 0%, 7%;
+
+    --background-clr: var(--clr-secondary), var(--clr-primary);
+    --background-border-clr: white;
+    --font-clr: white;
+    --font-clr-highlight: var(--clr-primary-soft);
+    --image-bg: white;
+    --switcher-lines: white;
+
+    --scrollbar-track-clr: white, var(--clr-primary), white;
+    --scrollbar-thumb-clr: var(--clr-secondary-bold);
+
+    --clr-price-base: #d12310e8;
+    --clr-price-true: #991899e8;
+    --clr-price-ship: #afafafe8;
+}
+
+.default:root {
+    --clr-primary-soft: hsl(192, 100%, 91%);
+    --clr-primary: hsl(197, 100%, 67%);
+    --clr-primary-bold: hsl(197, 100%, 31%);
+    --clr-secondary: hsl(313, 100%, 74%);
+    --clr-secondary-bold: hsl(313, 100%, 45%);
+
+    --color-visibility: 20%;
+
+    --gray-main: hsla(0, 0%, 7%, var(--color-visibility));
+    --gray-main: 0, 0%, 7%;
+
+    --background-clr: var(--clr-secondary), var(--clr-primary);
+    --background-border-clr: white;
+    --font-clr: white;
+    --font-clr-highlight: var(--clr-primary-soft);
+    --image-bg: white;
+    --switcher-lines: white;
+
+    --scrollbar-track-clr: white, var(--clr-primary), white;
+    --scrollbar-thumb-clr: var(--clr-secondary-bold);
+}
+
+.solaris-mode:root {
+    --clr-primary-soft: hsl(41, 92%, 80%)
+        /*hsl(6, 80%, 55%);*/
+    ;
+    --clr-primary: hsl(41, 92%, 53%);
+    --clr-primary-bold: hsl(41, 92%, 35%);
+
+    --clr-secondary: hsl(6, 89%, 48%);
+    --clr-secondary-bold: hsl(6, 89%, 25%);
+    --clr-secondary-bold-alt: hsl(0, 100%, 40%);
+
+    --color-visibility: 20%;
+
+    --gray-main: hsla(0, 0%, 7%, var(--color-visibility));
+    --gray-main: 0, 0%, 7%;
+
+    --background-clr: var(--clr-secondary), var(--clr-primary);
+    --background-border-clr: white;
+    --font-clr: white;
+    --font-clr-highlight: var(--clr-primary-soft);
+    --image-bg: white;
+    --switcher-lines: white;
+
+    --scrollbar-track-clr: white, var(--clr-primary), white;
+    --scrollbar-thumb-clr: var(--clr-secondary-bold-alt);
+}
+
+.dark-mode-blue:root {
+    --clr-primary-soft: hsl(0, 0%, 30%);
+    /*hsl(6, 80%, 55%);*/
+    --clr-primary: hsl(0, 0%, 15%);
+    --clr-primary-bold: hsl(0, 0%, 5%);
+
+    --clr-secondary-soft: hsl(252, 30%, 80%);
+    --clr-secondary: hsl(252, 30%, 26%);
+    --clr-secondary-bold: hsl(252, 30%, 10%);
+
+    --color-visibility: 20%;
+
+    --gray-main: hsla(0, 0%, 7%, var(--color-visibility));
+    --gray-main: 0, 0%, 7%;
+
+    --background-clr: var(--clr-secondary), var(--clr-primary);
+    --background-border-clr: white;
+    --font-clr: white;
+    --font-clr-highlight: var(--clr-secondary-soft);
+    --image-bg: white;
+    --switcher-lines: white;
+
+    --scrollbar-track-clr: white, var(--clr-secondary-soft), white;
+    --scrollbar-thumb-clr: var(--clr-secondary-bold);
+}
+
+.dark-mode-red:root {
+    --clr-primary-soft: hsl(0, 14%, 52%);
+    /*hsl(6, 80%, 55%);*/
+    --clr-primary: hsl(0, 48%, 26%);
+    --clr-primary-bold: hsl(0, 100%, 9%);
+
+    --clr-secondary-soft: hsl(6, 100%, 95%);
+    --clr-secondary: hsl(6, 89%, 48%);
+    --clr-secondary-bold: hsl(0, 100%, 40%);
+
+    --color-visibility: 20%;
+
+    --gray-main: hsla(0, 0%, 7%, var(--color-visibility));
+    --gray-main: 0, 0%, 7%;
+
+    --background-clr: var(--clr-secondary), var(--clr-primary);
+    --background-border-clr: white;
+    --font-clr: white;
+    --font-clr-highlight: var(--clr-secondary-soft);
+    --image-bg: white;
+    --switcher-lines: white;
+
+    --scrollbar-track-clr: white, var(--clr-secondary-soft), white;
+    --scrollbar-thumb-clr: var(--clr-secondary-bold);
+}
+
+@property --clr-special-1 {
+    syntax: '<color>';
+    initial-value: white;
+    inherits: false;
+}
+
+@property --clr-special-2 {
+    syntax: '<color>';
+    initial-value: black;
+    inherits: false;
+}
+
+::-webkit-scrollbar {
+    width: 0.8rem;
+}
+
+::-webkit-scrollbar-track {
+    background: linear-gradient(var(--scrollbar-track-clr));
+    margin-block: 3px;
+    border-right: 3px solid var(--background-border-clr);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-clr);
+    border-right: 3px solid var(--background-border-clr);
+}
+
+html {
+    width: 20rem;
+    --clr-special-1: var(--clr-secondary);
+    --clr-special-2: var(--clr-primary);
+    background: linear-gradient(var(--clr-special-1), var(--clr-special-2));
+    /* background: linear-gradient(var(--background-clr)); */
+    color: var(--font-clr);
+    border: 3px solid var(--background-border-clr);
+    border-right: none;
+    min-height: 110%;
+    transition: --clr-special-1 1s, --clr-special-2 1s;
+}
+
+.tp-body {
+    font-family: 'Roboto', sans-serif;
+}
+
+input,
+select {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.4;
+    /* somewhat excessive */
+    color: #333333;
+    /* if that’s what you want, but it reduces legibility */
+    background: white;
+    /* always set background when you set color */
+}
+
+.tp-header {
+    text-align: center;
+}
+
+.tp-main {
+    min-height: 120%;
+}
+
+.tp-switch-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid var(--switcher-lines);
+    border-top: 1px solid var(--switcher-lines);
+    position: relative;
+}
+
+.tp-switch-container .tp-btn-tab {
+    color: var(--font-clr);
+    font-size: 0.9rem;
+    background: none;
+    border: none;
+    padding: 0.4rem;
+    cursor: pointer;
+    transition: color 1s;
+}
+
+.tp-switch-container .tp-btn-tab.active {
+    color: var(--font-clr-highlight);
+}
+
+.tp-switch-container .tp-btn-tab:hover {
+    color: var(--font-clr-highlight);
+}
+
+.tp-switch-line {
+    position: absolute;
+    top: 1.45rem;
+    left: 2.25rem;
+    width: 3.8rem;
+    height: 0.18rem;
+    background-color: var(--font-clr-highlight);
+    border-radius: 0.3rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.tab {
+    display: none;
+}
+
+.tab.active {
+    display: block;
+}
+
+.tp-bookmark-item {
+    --color-visibility: 20%;
+    background-color: hsla(var(--gray-main), var(--color-visibility));
+    border: 2px solid hsla(var(--gray-main), 25%);
+    border-radius: 5%;
+    margin-top: 3%;
+}
+
+.tp-bookmark-item-flex {
+    display: flex;
+}
+
+.tp-item-price {
+    padding-left: 3px;
+    display: block;
+}
+
+.tp-item-title {
+    padding: 3px;
+    margin-bottom: 2%;
+}
+
+.tp-item-title a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--font-clr);
+    font-size: 1.1rem;
+}
+
+.tp-item-title h2 {
+    margin-block: 0;
+    margin-inline: 0;
+}
+
+.tp-item-image {
+    width: 98%;
+    height: auto;
+    border-radius: 10%;
+}
+
+.tp-item-image-container {
+    margin-left: 5px;
+    margin-bottom: 5px;
+    width: 35%;
+    height: auto;
+    background-color: var(--image-bg);
+    border-radius: 10%;
+}
+
+.tp-horizontal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+
+.tp-horizontal-image {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%;
+    border-radius: 10%;
+}
+
+.tp-price {
+    padding: 2px;
+    padding-left: 3px;
+    font-size: 0.8rem;
+    border-radius: 10%;
+}
+
+.tp-price-base {
+    background: linear-gradient(90deg, var(--clr-price-base) 90%, #ffffff00);
+}
+
+.tp-price-true {
+    background: linear-gradient(90deg, var(--clr-price-true) 90%, #ffffff00);
+}
+
+.tp-price-ship {
+    background: linear-gradient(90deg, var(--clr-price-ship) 90%, #ffffff00);
+}
+
+.tp-item-actions {
+    display: flex;
+    gap: 0.6rem;
+    line-height: 100%;
+    text-align: center;
+    justify-content: end;
+    margin: 0 1rem 0.2rem 1rem;
+}
+
+.tp-item-actions img {
+    padding: 5px;
+    display: block;
+    margin: 0;
+}
+
+.tp-action-icon {
+    width: 18px;
+    height: auto;
+    filter: invert(100%);
+}
+
+.tp-item-actions-button {
+    display: flex;
+    --color-visibility: 15%;
+    background-color: hsla(var(--gray-main), var(--color-visibility));
+    border-radius: 5px;
+    align-items: center;
+    padding: 0 1rem 0 0.5rem;
+    cursor: pointer;
+    transition: 0.8s;
+}
+
+.tp-item-actions-button:hover {
+    --color-visibility: 37%;
+}
+
+.tp-item-actions-button span {
+    margin-left: 4%;
+}
+
+/* Configuration */
+
+.tp-configuration-container h2 {
+    margin: 0px;
+    margin-top: 0.4rem;
+}
+
+.tp-configuration-container h2.section-title {
+    font-size: 1.3rem;
+    margin-top: 0px;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px var(--clr-secondary-bold);
+}
+
+.tp-configuration-box * {
+    vertical-align: middle;
+    margin: 0;
+}
+
+.tp-configuration-box input,
+.tp-configuration-box select {
+    width: 50%;
+    margin: 0.3rem 0rem;
+    border-radius: 5%;
+    border: none;
+}
+
+.tp-configuration-box input[type=radio] {
+    width: auto;
+}
+
+.tp-configuration-box span {
+    margin-right: 1rem;
+}
+
+.tp-configuration.tab {
+    padding-top: 0.5rem;
+}
+
+.tp-configuration-box #saveConfig {
+    margin: 0;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+#deleteWhishes,
+#resetConfig {
+    min-width: 5rem;
+}
+
+.tp-configuration-box.configuration-methods {
+    margin-top: 0.5rem;
+}
+
+span,
+label {
+    transition: 0.5s;
+}
+
+span:hover,
+label:hover {
+    text-shadow: 1px 0px black;
+}
+
+.tp-configuration-line {
+    margin: 0.8rem 0;
+    border-style: solid;
+    border-color: white;
+    color: white;
+}
+
+.tp-configuration-btn-special {
+    /* background: linear-gradient(90deg, var(--clr-primary), var(--clr-secondary)); */
+    /* background: blue; */
+    color: var(--font-clr);
+    border: 1px solid var(--font-clr);
+    border-radius: 5%;
+    cursor: pointer;
+    transition: all 0.5s;
+    --clr-special-1: var(--clr-secondary);
+    --clr-special-2: var(--clr-primary);
+    background: linear-gradient(var(--clr-special-1), var(--clr-special-2));
+    transition: --clr-special-1 1s, --clr-special-2 1s;
+}
+
+.tp-configuration-btn-special:hover {
+    /* background: linear-gradient(270deg, var(--clr-primary), var(--clr-secondary)); */
+    --clr-special-1: var(--clr-primary);
+    --clr-special-2: var(--clr-secondary);
+}
