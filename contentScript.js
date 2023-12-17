@@ -1,34 +1,48 @@
 (() => {
-    let priceButton;
+    const tokenPreferences = "preferencesId";
+    const tokenWhishList = "whishListId";
+
     let currentFigureId = "";
     let figureTruePrice = "";
     let figurePriceDifference = "";
+    let preferenceRefresh = false;
+    let calcShipping = 100;
+    let figurePrice = "";
+    let figureImage = "";
+
+    let pageType = "";
+
+    const ShippingMethods = ["saver", "regular", "express"];
+
+    let currencySignsPaternId = 0;
     let currencyTemp = 0;
-    const ShippingMethods = ['saver', 'regular', 'express'];
+
     const currencyPatern1 = {
-        decimal: ',',
-        hundred: '.',
+        decimal: ",",
+        hundred: ".",
         id: 0
     };
+
     const currencyPatern2 = {
-        decimal: '.',
-        hundred: ',',
+        decimal: ".",
+        hundred: ",",
         id: 1
     };
+
     const currencySignsPatern = [currencyPatern1, currencyPatern2];
-    let currencySignsPaternId = 0;
 
     const currency = {
-        symbol: ['¥', '$', '€', '£', 'SFr.', '$', '$', 'R$'],
-        country: ['JPY', 'USD', 'EUR', 'GBP', 'CHF', 'CAD', 'AUD', 'BRL']
-    }
+        symbol: ["¥", "$", "€", "£", "SFr.", "$", "$", "R$"],
+        country: ["JPY", "USD", "EUR", "GBP", "CHF", "CAD", "AUD", "BRL"]
+    };
+
 
     let preferences = {
         method: 1,
-        shippinCost: 150.0,
+        shippingCost: 150.0,
         porcentage: 0.7,
         currencyId: 7
-    }
+    };
 
     const showPriceProducts = () => {
 
@@ -36,7 +50,7 @@
         calculatePrice("h5--body product__price");
 
         if (truePricebtnExists) {
-            document.getElementById('truePriceBtn').innerHTML = getTruePriceButton();
+            document.getElementById("truePriceBtn").innerHTML = getTruePriceButton();
             return;
         }
 
@@ -51,7 +65,7 @@
         truePriceButton.innerHTML = getTruePriceButton();
         truePrieceInfo.appendChild(truePriceButton);
 
-        priceButton = document.getElementsByClassName("product__form")[0];
+        const priceButton = document.getElementsByClassName("product__form")[0];
         priceButton.appendChild(truePrieceInfo);
     }
 
@@ -84,14 +98,21 @@
     }
 
     const showPriceProductsList = () => {
-        const productList = document.getElementsByClassName('product__labels-wrapper');
+        const productList = document.getElementsByClassName("product__labels-wrapper");
 
         for (let i = 0; i < productList.length; i++) {
-            if (productList[i].innerText.includes('TRUE PRICE')) {
+
+            let listedPrice = productList[i].getElementsByClassName("money")[0];
+
+            if (preferenceRefresh) {
+                calculatePriceList(listedPrice);
+                productList[i].querySelector('div[name="truePriceBtn"]').innerHTML = getTruePriceListButton().innerHTML;
                 continue;
             }
 
-            let listedPrice = productList[i].getElementsByClassName('money')[0];
+            if (productList[i].innerText.includes("TRUE PRICE")) {
+                continue;
+            }
 
             if (listedPrice == null) {
                 continue;
@@ -109,8 +130,9 @@
     }
 
     const getTruePriceListButton = () => {
-        const buttonDiv = document.createElement('div');
-        buttonDiv.className = 'product-label product-label--pre-order tw-relative';
+        const buttonDiv = document.createElement("div");
+        buttonDiv.className = "product-label product-label--pre-order tw-relative";
+        buttonDiv.setAttribute("name", "truePriceBtn")
         buttonDiv.style = "background-color: rgb(153, 24, 153);";
         buttonDiv.innerHTML =
             `<span class="product-label__title">True Price</span> 
@@ -124,13 +146,12 @@
     }
 
     const showPriceProductsSearch = () => {
-        const productList = document.getElementsByClassName('product__labels-wrapper');
+        const productList = document.getElementsByClassName("product__labels-wrapper");
 
         for (let i = 0; i < productList.length; i++) {
 
-            if (productList[i].innerText.includes('TRUE PRICE')) {
-                if (productList[i].innerText.includes('not Available')) {
-                    console.log("not Av");
+            if (productList[i].innerText.includes("TRUE PRICE") && !preferenceRefresh) {
+                if (productList[i].innerText.includes("not Available")) {
                     const lent = (productList.length) - 1;
                     productList[lent].remove();
                 } else {
@@ -138,7 +159,13 @@
                 }
             }
 
-            const listedPrice = productList[i].getElementsByClassName('money')[0];
+            const listedPrice = productList[i].getElementsByClassName("money")[0];
+
+            if (preferenceRefresh) {
+                calculatePriceList(listedPrice);
+                productList[i].querySelector('div[name="truePriceBtn"]').innerHTML = getTruePriceListButton().innerHTML;
+                continue;
+            }
 
             if (listedPrice == null) {
                 figureTruePrice = "0.00 not Available";
@@ -157,8 +184,10 @@
     }
 
     const addPorcetage = (cleanPrice) => {
+        console.log(cleanPrice);
         cleanPrice = cleanPrice.split(currency.symbol[currencyTemp]);
         cleanPrice = formatStringToFloat(cleanPrice[cleanPrice.length - 1]);
+        figurePrice = cleanPrice;
         calcPrice = ((cleanPrice + calcShipping) + ((cleanPrice + calcShipping) * preferences.porcentage)).toFixed(2);
 
         figurePriceDifference = formatNumberToString(((calcPrice - cleanPrice).toFixed(2)));
@@ -178,26 +207,28 @@
     }
 
     const calculatePriceList = (priceElement) => {
-        calcShipping = preferences.shippinCost;
+        calcShipping = preferences.shippingCost;
         addPorcetage(priceElement.innerText);
     }
 
     const formatNumberToString = (ogNumber) => {
-
-        if (currencySignsPaternId == currencyPatern1.Id) {
-            ogNumber = ogNumber.toString().replace('.', ',');
+        console.log("PaternId: " + currencySignsPaternId);
+        console.log("patern1: " + currencyPatern1.id)
+        if (currencySignsPaternId == currencyPatern1.id) {
+            console.info("something");
+            ogNumber = ogNumber.toString().replace(".", ",");
         }
 
         if (ogNumber.length > 6) {
             pointposition = ogNumber.length - 6;
-            ogNumber = [ogNumber.slice(0, pointposition), currencySignsPatern[currencySignsPaternId].hundred, ogNumber.slice(pointposition)].join('');
+            ogNumber = [ogNumber.slice(0, pointposition), currencySignsPatern[currencySignsPaternId].hundred, ogNumber.slice(pointposition)].join("");
         }
         return ogNumber;
     }
 
     const formatStringToFloat = (ogString) => {
         if (currencySignsPaternId == currencyPatern1.id) {
-            return parseFloat(ogString.replace('.', '').replace(',', '.'));
+            return parseFloat(ogString.replace(".", "").replace(",", "."));
         }
         return parseFloat(ogString);
     }
@@ -211,7 +242,7 @@
     }
 
     const updateCurrency = () => {
-        let currencyExample = document.getElementsByClassName('money')[0].innerText.split(' ')[0];
+        let currencyExample = document.getElementsByClassName("money")[0].innerText.split(" ")[0];
 
         for (i = 0; i < currencyExample.length; i++) {
             if (!isNaN(currencyExample.charAt(i))) {
@@ -225,46 +256,51 @@
                 return;
             }
         }
-        console.log("Default Currency");
+        console.info("Default Currency");
         currencyTemp = preferences.currencyId;
     }
 
     const receivePageLoad = (type, figureId) => {
-        console.log(type);
-
+        pageType = type;
         currentFigureId = figureId;
+        loadConfigurationPreferences();
+    }
+
+    const pageLoadMethod = () => {
+        type = pageType;
         updateCurrency();
         getCurrencyPatern();
         stopObserving();
-
         switch (type) {
-            case 'home':
+            case "home":
                 showPriceProductsList();
                 break;
-            case 'products':
+            case "products":
                 showPriceProducts();
                 break;
-            case 'collections':
+            case "collections":
                 showPriceProductsList();
                 break;
-            case 'search':
+            case "search":
                 showPriceProductsSearch();
                 break;
             default:
-                console.log("Didn't quite work. " + type);
+                console.info("Didn't quite work. " + type);
         }
+        preferenceRefresh = false;
         startObserving();
+
     }
 
     const getShippingPrice = () => {
 
-        let listShippingPrices = document.getElementsByClassName('worldwide-shipping')[0].getElementsByClassName('money');
+        let listShippingPrices = document.getElementsByClassName("worldwide-shipping")[0].getElementsByClassName("money");
         let returnPrice;
 
         if (listShippingPrices.length > 0) {
 
             if (!listShippingPrices[1].innerText.includes(currency.symbol[currencyTemp])) {
-                return preferences.shippinCost;
+                return preferences.shippingCost;
             }
 
             if (document.querySelector("#" + ShippingMethods[preferences.method] + " .money")) {
@@ -275,21 +311,48 @@
 
             return formatStringToFloat(returnPrice.split(currency.symbol[currencyTemp])[1]);
         }
-        return preferences.shippinCost;
+        return preferences.shippingCost;
     }
-    
+
+    const loadConfigurationPreferences = () => {
+        chrome.storage.local.get({ tokenPreferences }, function (result) {
+            const pre = result.tokenPreferences;
+            if (!pre) {
+                console.info(`Couldn't load preferences. \nThe values have been set to default`);
+                preferences.currencyId = 0;
+                preferences.method = 1;
+                preferences.shippingCost = 100;
+                preferences.porcentage = 0.7;
+                saveConfigurationPreferences(preferences);
+                pageLoadMethod();
+                return;
+            }
+            preferences.currencyId = parseInt(pre.currencyId);
+            preferences.method = parseInt(pre.method);
+            preferences.porcentage = parseFloat(pre.porcentage);
+            preferences.shippingCost = parseFloat(pre.shippingCost);
+            pageLoadMethod();
+        });
+    }
+
+    const saveConfigurationPreferences = (options) => {
+        chrome.storage.local.set({ tokenPreferences: options });
+        showSaveMsg(true);
+    }
+
     const windowReloaded = () => {
         const url = window.location.href;
         if (url && url.includes("solarisjapan.com")) {
             const linkInfo = url.split("com")[1];
             let productType = linkInfo.split("/")[1];
 
-            if (linkInfo.includes('products')) {
-                productType = 'products';
+            if (linkInfo.includes("products")) {
+                startWhishListButton();
+                productType = "products";
             }
 
-            if (linkInfo == '/') {
-                receivePageLoad('home', '');
+            if (linkInfo == "/") {
+                receivePageLoad("home", "");
                 return;
             }
             receivePageLoad(productType, linkInfo.split("/")[2].split("?")[0]);
@@ -321,7 +384,77 @@
     });
 
     window.addEventListener("load", function () {
-        console.log("Window Refresh");
+        console.info("Window Refresh");
         windowReloaded();
     });
+
+    chrome.storage.onChanged.addListener(function () {
+        console.info("Preference Refresh");
+        preferenceRefresh = true;
+        windowReloaded();
+    });
+
+    const addItemToWishList = async () => {
+        await getFigureImage();
+        console.log(figurePrice);
+        const newItem = {
+            id: currentFigureId + Date(),
+            title: document.getElementsByClassName("product-title__en")[0].innerText,
+            price: `${currency.symbol[currencyTemp]}  ${formatNumberToString(figurePrice)}`,
+            truePrice: document.getElementById("truePriceBtn").getElementsByClassName("money")[0].innerText,
+            shippingCost: `${currency.symbol[currencyTemp]}  ${formatNumberToString(calcShipping.toFixed(2))}`,
+            image: figureImage,
+            url: window.location.href,
+            favorite: false
+        }
+
+        chrome.storage.local.get({ tokenWhishList }, function (result) {
+            let whishList = result.tokenWhishList;
+
+            if (!whishList) {
+                whishList = [];
+            }
+
+            whishList.push(newItem);
+            saveWhishList(whishList);
+        });
+    }
+
+    const saveWhishList = (list) => {
+        chrome.storage.local.set({ tokenWhishList: list });
+    }
+
+    const getFigureImage = async () => {
+        const imageElements = document.getElementsByTagName("img")[22].srcset;
+        const links = imageElements.split(",");
+
+        let finalLink = "https:" + links[0];
+
+        if (links.length > 1) {
+            finalLink = "https:" + links[parseInt(((links.length / 2) - 1))];
+        }
+
+        figureImage = await imageUrlToBase64(finalLink.replace(" ", ""));
+    }
+
+    const imageUrlToBase64 = async url => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new Promise((onSuccess, onError) => {
+            try {
+                const reader = new FileReader();
+                reader.onload = function () { onSuccess(this.result) };
+                reader.readAsDataURL(blob);
+            } catch (e) {
+                onError(e);
+            }
+        });
+    };
+
+    const startWhishListButton = () => {
+        const btn = document.getElementById("truePriceBtn");
+        if (btn) {
+            btn.addEventListener("click", addItemToWishList)
+        }
+    }
 })();
